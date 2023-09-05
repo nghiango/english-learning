@@ -2,12 +2,13 @@ const SpeechSDK = require("microsoft-cognitiveservices-speech-sdk");
 const fs = require("fs");
 const _ = require("lodash");
 const difflib = require("difflib");
+const path = require("path");
 
-const subscriptionKey = "";
-const serviceRegion = "eastus"; // e.g., "westus"
 
 const execPronunciationAssessment = (filename, referenceText) => {
-  const fileUrl = path(`./public/uploads/${filename}`); // 16000 Hz, Mono
+  const subscriptionKey = process.env.AZURE_KEY;
+  const serviceRegion = "eastus"; // e.g., "westus"
+  const fileUrl = path.resolve(`./public/uploads/${filename}.wav`); // 16000 Hz, Mono
   const pronunciationAssessmentConfig =
     new SpeechSDK.PronunciationAssessmentConfig(
       referenceText,
